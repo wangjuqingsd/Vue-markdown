@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>multi-markdown</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="material-fonts.css" rel="stylesheet" type="text/css" />
+</head>
+    <div id="notebook">
+<!--    侧边栏-增加笔记，选中笔记    -->
+        <aside class="side-bar">
+            <div class="toolbar">
+                <button @click="addNote" :title="addButtonTitle"><i class="material-icons">add</i>添加笔记</button>
+            </div>
+            <div class="notes">
+                <div class="note" :class="{selected:note===selectedNote}" v-for="note in sortedNotes"
+                     @click="selectNote(note)">
+                    <i class="material-icons" v-if="note.favorite">star</i>
+                    {{note.title}}
+                </div>
+            </div>
+        </aside>
+<!--    中间区域，编辑Markdown文档，收藏，删除。    -->
+        <section class="main">
+            <div class="toolbar">
+                <input type="text" v-model="selectedNote.title">
+                <button @click="favoriteNote" title="Favorite note"><i class="material-icons">{{ selectedNote.favorite ? 'star_border' : 'star' }}</i></button>
+                <button @click="deleteNote"><i class="material-icons">delete</i></button>
+            </div>
+
+
+            <textarea v-model="selectedNote.content"></textarea>
+            <div class="toolbar status-bar">
+                <span>创建日期：</span>
+            </div>
+        </section>
+<!--    右边区域，预览当前选中markdown文档。    -->
+        <aside class="preview" v-html="notePreview">
+        </aside>
+    </div>
+    <script src="vue.js"></script>
+    <script src="tools/marked.js"></script>
+<!--    <script src="./tools/moment.js"></script>-->
+    <script type="text/javascript" src="multi-markdown.js"></script>
+
+
+<body>
+
+</body>
+</html>
